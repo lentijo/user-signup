@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask, request, redirect
 
 
 app = Flask(__name__)
@@ -93,19 +93,25 @@ def print_form_value():
         verify_password = ''
 
     # need the if and for loop to validate email, need to have @ . and space
-    for i in email():
-        if i != "@" or i =! "." or i =! " ":
+    #for i in email():
+        #if i != "@" or i =! "." or i =! " ":
     #if "@" not in email" or "." not in email or " " in email:
         #error_email = "That's not a valid email"
         #email = ''
 
     if not error_username and not error_password and not error_verify_password and not error_email:
-        return '<h1> Welcome, ' + username + '!</h1>'
+        return redirect('/welcome-form')
 
     else:
         return form.format(error_username=error_username, error_password=error_password, error_verify_password=error_verify_password, error_email=error_email)
 
 
         #return '<h1> Welcome, ' + username + '!</h1>'
+
+
+@app.route('/welcome-form')
+def welcome_form():
+    return '<h1> Welcome, ' + username + '!</h1>'
+
     
 app.run()
