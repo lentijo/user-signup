@@ -2,49 +2,55 @@
 <html>
     <head>
         <style>
-            form {{
+            form {
                 background-color: #eee;
                 padding: 20px;
                 margin: 0 auto;
                 width: 540px;
                 font: 16px sans-serif;
                 border-radius: 10px;
-            }}
+            }
+
+            .error {
+                color: red;
+                display: inline; 
+
+            }
+
+    
 
 
         </style>
     </head>
     <body>
         <form method= 'POST'>
-            <style>
-                .error {{color:red;}}
-            </style>
+
             <h1>Signup</h1>
             <label> Username
-            <input name="username" type="text" value='{username}' />
+            <input name="username" type="text" value='{{username}}' />
             </label>
-            <p class="error">{error_username}</p>
+            <p class="error">{{error_username}}</p>
 
             <br/>
 
             <label> Password
-            <input name="password" type="password" value='{password}' />
+            <input name="password" type="password" value='{{password}}' />
             </label>
-            <p class="error">{error_password}</p>
+            <p class="error">{{error_password}}</p>
             <br/>
                        
 
             <label> Verify Password
-            <input name="verify_password" type="password" value='{verify_password}' />
+            <input name="verify_password" type="password" value='{{verify_password}}' />
             </label>
-            <p class="error">{error_verify_password}</p>
+            <p class="error">{{error_verify_password}}</p>
 
             <br/>
 
             <label>Email (optional)
-            <input name="email" type="text" value='{email}' />
+            <input name="email" type="text" value='{{email}}' />
             </label>
-            <p class="error">{error_email}</p>
+            <p class="error">{{error_email}}</p>
 
             <br/>
             <input type="submit"  />
@@ -52,4 +58,3 @@
         </form>
     </body>
 </html>
-"""

@@ -1,71 +1,14 @@
-from flask import Flask, request, redirect
+from flask import Flask, request, redirect, render_template
 
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
 
-form = """
-
-<!doctype html>
-<html>
-    <head>
-        <style>
-            form {{
-                background-color: #eee;
-                padding: 20px;
-                margin: 0 auto;
-                width: 540px;
-                font: 16px sans-serif;
-                border-radius: 10px;
-            }}
-
-
-        </style>
-    </head>
-    <body>
-        <form method= 'POST'>
-            <style>
-                .error {{color:red;}}
-            </style>
-            <h1>Signup</h1>
-            <label> Username
-            <input name="username" type="text" value='{username}' />
-            </label>
-            <p class="error">{error_username}</p>
-
-            <br/>
-
-            <label> Password
-            <input name="password" type="password" value='{password}' />
-            </label>
-            <p class="error">{error_password}</p>
-            <br/>
-                       
-
-            <label> Verify Password
-            <input name="verify_password" type="password" value='{verify_password}' />
-            </label>
-            <p class="error">{error_verify_password}</p>
-
-            <br/>
-
-            <label>Email (optional)
-            <input name="email" type="text" value='{email}' />
-            </label>
-            <p class="error">{error_email}</p>
-
-            <br/>
-            <input type="submit"  />
-        
-        </form>
-    </body>
-</html>
-"""
 
 
 @app.route("/")
 def index():
-    return form.format(username='', error_username='', password='', error_password='', verify_password = '', error_verify_password='', email='', error_email='')
+    return render_template("index.html", username='', error_username='', password='', error_password='', verify_password = '', error_verify_password='', email='', error_email='')
 
 @app.route("/", methods=['POST'])
 def print_form_value():
@@ -92,26 +35,24 @@ def print_form_value():
         error_verify_password = "Passwords don't match"
         verify_password = ''
 
-    # need the if and for loop to validate email, need to have @ . and space
-    #for i in email():
-        #if i != "@" or i =! "." or i =! " ":
-    #if "@" not in email" or "." not in email or " " in email:
-        #error_email = "That's not a valid email"
-        #email = ''
+    if email.count("@")!=1 or email.count(".")!=1 or email.count(" ")!=0:
+        error_email = "That's not a valid email"
+        email = ''
+
 
     if not error_username and not error_password and not error_verify_password and not error_email:
-        return redirect('/welcome-form')
+        username = request.form['username']
+        return render_template('welcome-page.html', username=username)
+
 
     else:
-        return form.format(error_username=error_username, error_password=error_password, error_verify_password=error_verify_password, error_email=error_email)
+        return render_template("index.html", username=username, email=email,error_username=error_username, error_password=error_password, error_verify_password=error_verify_password, error_email=error_email)
 
 
-        #return '<h1> Welcome, ' + username + '!</h1>'
+       
 
 
-@app.route('/welcome-form')
-def welcome_form():
-    return '<h1> Welcome, ' + username + '!</h1>'
+
 
     
 app.run()
